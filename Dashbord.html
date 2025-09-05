@@ -95,6 +95,16 @@
         <!-- Main Content -->
         <main>
             <h1>Analytics</h1>
+            <!-- Local Weather (7-day forecast) -->
+            <section class="weather-section">
+                <div class="weather-header">
+                    <h2>Best Day for Bike Ride</h2>
+                    <p id="weather-location" class="text-muted">Detecting location…</p>
+                </div>
+                <div id="weather-forecast" class="weather-grid" aria-live="polite"></div>
+                <div id="weather-error" class="weather-error" role="alert" hidden></div>
+            </section>
+            <!-- End Weather -->
             <!-- Analyses -->
             <div class="analyse">
                 <div class="sales">
@@ -300,6 +310,7 @@
 
     <script src="orders.js"></script>
     <script src="index.js"></script>
+    <script src="weather.js"></script>
 </body>
 
 </html>
