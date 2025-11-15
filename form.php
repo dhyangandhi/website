@@ -1,38 +1,33 @@
 <?php
-    // getting all values from the HTML form
-    if(isset($_POST['submit']))
-    {
-        $fname = $_POST['fname'];
-        $lname = $_POST['lname'];
-        $email = $_POST['email'];
+// CONNECT TO DATABASE
+$conn = mysqli_connect("localhost", "root", "", "registration");
+
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+// CHECK IF FORM SUBMITTED
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    $fullname = $_POST['FullName'];
+    $username = $_POST['UserName'];
+    $email = $_POST['email'];
+    $phone = $_POST['PhoneNumber'];
+    $password = $_POST['Password'];
+    $confirm = $_POST['ConfirmPassword'];
+
+    if ($password !== $confirm) {
+        die("passwords do not match.");
     }
 
-    // database details
-    $host = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "sampledb";
+    // Insert Query
+    $sql = "INSERT INTO users (FullName, UserName, Email, PhoneNumber, Password)
+            VALUES ('$fullname', '$username', '$email', '$phone', '$password')";
 
-    // creating a connection
-    $con = mysqli_connect($host, $username, $password, $dbname);
-
-    // to ensure that the connection is made
-    if (!$con)
-    {
-        die("Connection failed!" . mysqli_connect_error());
+    if (mysqli_query($conn, $sql)) {
+        echo "Registration successful!";
+    } else {
+        echo "Error: " . mysqli_error($conn);
     }
-
-    // using sql to create a data entry query
-    $sql = "INSERT INTO contactform_entries (id, fname, lname, email) VALUES ('0', '$fname', '$lname', '$email')";
-  
-    // send query to the database to add values and confirm if successful
-    $rs = mysqli_query($con, $sql);
-    if($rs)
-    {
-        echo "Entries added!";
-    }
-  
-    // close connection
-    mysqli_close($con);
-
+}
 ?>
